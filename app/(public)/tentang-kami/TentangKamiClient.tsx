@@ -180,9 +180,15 @@ export default function TentangKamiClient({ pageContent, team, settings }: Props
                 </motion.a>
               )}
               <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
-                <Link href="/lowongan"
+                <Link href="/layanan/lowongan"
                   className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors">
                   Lihat Lowongan
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
+                <Link href="/layanan/magang"
+                  className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors">
+                  Lihat Magang
                 </Link>
               </motion.div>
             </motion.div>
@@ -522,27 +528,52 @@ export default function TentangKamiClient({ pageContent, team, settings }: Props
             className="text-white/40 max-w-md mx-auto text-lg mb-12">
             Raih impian karir internasional bersama tim profesional Tenhal. Konsultasi gratis, tanpa komitmen.
           </motion.p>
-          <motion.div initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
-            viewport={{ once:true }} transition={{ delay:0.3 }}
-            className="flex flex-wrap justify-center gap-4">
-            {wa && (
-              <motion.a href={`https://wa.me/${wa}`} target="_blank" rel="noopener noreferrer"
-                whileHover={{ scale:1.05, boxShadow:"0 24px 60px rgba(56,139,253,0.5)" }} whileTap={{ scale:0.97 }}
-                className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black rounded-2xl text-sm shadow-2xl shadow-blue-900/50">
-                <MessageCircle className="w-4 h-4" />
-                Konsultasi Gratis via WA
-                <motion.span animate={{ x:[0,5,0] }} transition={{ duration:1.2, repeat:Infinity }}>
-                  <ArrowRight className="w-4 h-4" />
-                </motion.span>
-              </motion.a>
-            )}
-            <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
-              <Link href="/lowongan"
-                className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors">
-                Lihat Lowongan <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-          </motion.div>
+          <motion.div
+  initial={{ opacity:0, y:20 }}
+  whileInView={{ opacity:1, y:0 }}
+  viewport={{ once:true }}
+  transition={{ delay:0.3 }}
+  className="flex flex-col items-center gap-4"
+>
+
+  {/* tombol atas */}
+  <div className="flex flex-wrap justify-center gap-4">
+
+    <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
+      <Link href="/layanan/lowongan"
+        className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors">
+        Lihat Lowongan <ArrowRight className="w-4 h-4" />
+      </Link>
+    </motion.div>
+
+    <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
+      <Link href="/layanan/magang"
+        className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors">
+        Lihat Magang <ArrowRight className="w-4 h-4" />
+      </Link>
+    </motion.div>
+
+  </div>
+
+  {/* tombol WA bawah */}
+  {wa && (
+    <motion.a
+      href={`https://wa.me/${wa}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ scale:1.05, boxShadow:"0 24px 60px rgba(56,139,253,0.5)" }}
+      whileTap={{ scale:0.97 }}
+      className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black rounded-2xl text-sm shadow-2xl shadow-blue-900/50"
+    >
+      <MessageCircle className="w-4 h-4" />
+      Konsultasi Gratis via WA
+      <motion.span animate={{ x:[0,5,0] }} transition={{ duration:1.2, repeat:Infinity }}>
+        <ArrowRight className="w-4 h-4" />
+      </motion.span>
+    </motion.a>
+  )}
+
+</motion.div>
         </div>
       </section>
 

@@ -165,23 +165,45 @@ export default function HomeClient({ jobs, sectors, countries, pageContent, faqC
                 {hero.content || "TenHal membuka jalan ke Eropa — pelatihan intensif, proses legal P3MI, dan pendampingan penuh hingga kamu berangkat."}
               </motion.p>
               <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mb-14">
-                {wa && (
-                  <motion.a href={`https://wa.me/${wa}`} target="_blank" rel="noopener noreferrer"
-                    whileHover={{ scale: 1.04, boxShadow: "0 0 40px rgba(56,139,253,0.5)" }} whileTap={{ scale: 0.96 }}
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black rounded-2xl text-sm shadow-xl shadow-blue-900/40">
-                    Daftar Gratis Sekarang
-                    <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.3, repeat: Infinity }}>
-                      <ArrowRight className="w-4 h-4" />
-                    </motion.span>
-                  </motion.a>
-                )}
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <Link href="/layanan/lowongan"
-                    className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors">
-                    Lihat Lowongan
-                  </Link>
-                </motion.div>
-              </motion.div>
+
+  {/* LOWONGAN */}
+  <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
+    <Link
+      href="/layanan/lowongan"
+      className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors"
+    >
+      <Briefcase className="w-4 h-4" />
+      Lowongan
+    </Link>
+  </motion.div>
+
+  {/* MAGANG */}
+  <motion.div whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}>
+    <Link
+      href="/layanan/magang"
+      className="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold rounded-2xl text-sm transition-colors"
+    >
+      <GraduationCap className="w-4 h-4" />
+      Magang
+    </Link>
+  </motion.div>
+
+  {/* WHATSAPP */}
+  {wa && (
+    <motion.a
+      href={`https://wa.me/${wa}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ scale:1.04, boxShadow:"0 0 40px rgba(56,139,253,0.5)" }}
+      whileTap={{ scale:0.96 }}
+      className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black rounded-2xl text-sm shadow-xl shadow-blue-900/40"
+    >
+      <MessageCircle className="w-4 h-4" />
+      Konsultasi Gratis
+    </motion.a>
+  )}
+
+</motion.div>
               <motion.div variants={fadeUp} className="flex items-center">
                 {[{ num: 11, suf: "+", label: "Negara" }, { num: 100, suf: "+", label: "Alumni" }, { num: 7, suf: "+ thn", label: "Pengalaman" }].map((s, i) => (
                   <div key={s.label} className="flex items-center">
@@ -710,9 +732,12 @@ export default function HomeClient({ jobs, sectors, countries, pageContent, faqC
                   </motion.div>
                   <motion.h2 variants={fadeUp} className="text-4xl sm:text-5xl font-black text-[#0a1628] tracking-tight">Kerja di Eropa</motion.h2>
                 </div>
-                <motion.div variants={fadeUp} whileHover={{ x: 4 }}>
+                <motion.div variants={fadeUp} whileHover={{ x: 4 }} className="flex items-center gap-3">
                   <Link href="/layanan/lowongan" className="hidden md:flex items-center gap-1.5 text-sm font-bold text-[#0a1628] hover:text-blue-600 transition-colors">
-                    Semua <ArrowRight className="w-4 h-4" />
+                    Lowongan <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/layanan/magang" className="hidden md:flex items-center gap-1.5 text-sm font-bold text-[#0a1628] hover:text-blue-600 transition-colors">
+                    Magang <ArrowRight className="w-4 h-4" />
                   </Link>
                 </motion.div>
               </div>
@@ -756,9 +781,12 @@ export default function HomeClient({ jobs, sectors, countries, pageContent, faqC
                   </motion.div>
                 ))}
               </div>
-              <motion.div variants={fadeUp} className="mt-10 text-center md:hidden">
-                <Link href="/layanan/lowongan" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#0a1628] text-white text-sm font-bold rounded-2xl">
+              <motion.div variants={fadeUp} className="mt-10 text-center md:hidden flex gap-3 justify-center">
+                <Link href="/layanan/lowongan" className="inline-flex items-center gap-2 px-5 py-3.5 bg-[#0a1628] text-white text-sm font-bold rounded-2xl">
                   Semua Lowongan <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link href="/layanan/magang" className="inline-flex items-center gap-2 px-5 py-3.5 border border-[#0a1628] text-[#0a1628] text-sm font-bold rounded-2xl">
+                  Semua Magang <ArrowRight className="w-4 h-4" />
                 </Link>
               </motion.div>
             </Rev>

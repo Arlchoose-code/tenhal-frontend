@@ -13,11 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8080";
+const PUBLIC_BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || BACKEND_URL;
 
 function resolveUrl(url: string) {
   if (!url) return "";
   if (url.startsWith("http")) return url;
-  return `${BACKEND_URL}/${url}`;
+  return `${PUBLIC_BACKEND_URL}/${url}`;
 }
 
 async function getSiteSettings(): Promise<Record<string, string>> {

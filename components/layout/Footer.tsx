@@ -78,6 +78,7 @@ export default function Footer({ settings }: FooterProps) {
                 { label: "Home", href: "/" },
                 { label: "Tentang Kami", href: "/tentang-kami" },
                 { label: "Lowongan Kerja", href: "/layanan/lowongan" },
+                { label: "Magang", href: "/layanan/magang" },
                 { label: "Blog", href: "/blog" },
                 { label: "Hubungi Kami", href: "/hubungi-kami" },
               ].map((l) => (
