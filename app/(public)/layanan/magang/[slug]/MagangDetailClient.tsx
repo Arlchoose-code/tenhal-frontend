@@ -31,7 +31,7 @@ const imgUrl = (url: string) => {
   if (!url) return null
   if (url.startsWith("http")) return url.replace(/^https?:\/\/[^/]+/, "/api")
   if (url.startsWith("/uploads")) return `/api${url}`
-  return `/api/uploads/${url}`
+  return `/api/${url}`
 }
 
 /* ─── Dynamic Field — render berdasarkan field_type dari DB ─── */
