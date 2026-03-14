@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { clearTokens } from "@/lib/auth"
+import { clearTokens, getToken } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
@@ -15,10 +15,10 @@ import {
 const navItems = [
   { href: "/admin/dashboard",              label: "Dashboard",    icon: LayoutDashboard },
   { href: "/admin/jobs",                   label: "Lowongan",     icon: Briefcase },
-  { href: "/admin/applicants",             label: "Pelamar",      icon: Users },
-  { href: "/admin/language-registrations", label: "Kelas Bahasa", icon: GraduationCap },
+  { href: "/admin/applicants",             label: "Pelamar",      icon: Users,          countKey: "applicants" },
+  { href: "/admin/language-registrations", label: "Kelas Bahasa", icon: GraduationCap,  countKey: "language" },
   { href: "/admin/blog",                   label: "Blog",         icon: BookOpen },
-  { href: "/admin/contacts",               label: "Pesan Masuk",  icon: MessageSquare },
+  { href: "/admin/contacts",               label: "Pesan Masuk",  icon: MessageSquare,  countKey: "contacts" },
   { href: "/admin/team-members",           label: "Tim",          icon: Users },
   { href: "/admin/countries",              label: "Negara",       icon: Globe },
   { href: "/admin/settings",               label: "Pengaturan",   icon: Settings },
@@ -38,18 +38,40 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const router = useRouter()
   const [emailOpen, setEmailOpen] = useState(pathname.startsWith("/admin/email"))
   const [counts, setCounts] = useState<Record<string, number>>({})
+  const [navCounts, setNavCounts] = useState<Record<string, number>>({})
 
   useEffect(() => {
     if (pathname.startsWith("/admin/email")) setEmailOpen(true)
   }, [pathname])
 
   useEffect(() => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null
-    if (!token) return
-    fetch("/api/admin/email/counts", { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json())
-      .then(json => { if (json.data) setCounts(json.data) })
-      .catch(() => {})
+    function fetchCounts() {
+      const token = getToken()
+      if (!token) return
+      fetch("/api/admin/email/counts", { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => r.json())
+        .then(json => { if (json.data) setCounts(json.data) })
+        .catch(() => {})
+    }
+    function fetchNavCounts() {
+      const token = getToken()
+      if (!token) return
+      fetch("/api/admin/sidebar-counts", { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => r.json())
+        .then(json => { if (json.data) setNavCounts(json.data) })
+        .catch(() => {})
+    }
+    fetchCounts()
+    fetchNavCounts()
+    const t = setTimeout(() => { fetchCounts(); fetchNavCounts() }, 1000)
+    window.addEventListener("email:read", fetchCounts)
+    // Listen event dari halaman lain (contacts read, applicant update, dll)
+    window.addEventListener("sidebar:refresh", () => { fetchCounts(); fetchNavCounts() })
+    return () => {
+      clearTimeout(t)
+      window.removeEventListener("email:read", fetchCounts)
+      window.removeEventListener("sidebar:refresh", () => {})
+    }
   }, [])
 
   function handleLogout() {
@@ -89,7 +111,12 @@ export default function Sidebar({ onClose }: SidebarProps) {
                     isActive ? "text-[#1a3c6e]" : "text-white/70 group-hover:text-white")} />
                 </div>
                 <span className="flex-1">{item.label}</span>
-                {isActive && (
+                {"countKey" in item && item.countKey && navCounts[item.countKey] > 0 && (
+                  <span className="ml-auto text-[10px] font-bold bg-red-500 text-white rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                    {navCounts[item.countKey] > 99 ? "99+" : navCounts[item.countKey]}
+                  </span>
+                )}
+                {isActive && !("countKey" in item && item.countKey && navCounts[item.countKey] > 0) && (
                   <motion.div initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
                     <ChevronRight className="w-3 h-3 opacity-60" />
                   </motion.div>

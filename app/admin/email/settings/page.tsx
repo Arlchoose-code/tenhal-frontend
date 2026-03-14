@@ -80,10 +80,27 @@ export default function EmailSettingsPage() {
 
       {/* Panduan */}
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 space-y-1.5">
-        <div className="flex items-center gap-2 text-blue-700 font-semibold text-sm"><Info className="w-4 h-4 flex-shrink-0" /> Panduan Setup</div>
+        <div className="flex items-center gap-2 text-blue-700 font-semibold text-sm"><Info className="w-4 h-4 flex-shrink-0" /> Panduan Setup Brevo</div>
         <div className="text-xs text-slate-500 space-y-1">
-          <p><b>Gmail:</b> aktifkan 2FA → buat <a href="https://myaccount.google.com/apppasswords" target="_blank" className="text-blue-600 underline">App Password</a> → paste di Password.</p>
-          <p><b>Brevo:</b> Host = <span className="font-mono bg-slate-100 px-1 rounded">smtp-relay.brevo.com</span>, Port = <span className="font-mono bg-slate-100 px-1 rounded">587</span>, User = email Brevo, Pass = API Key.</p>
+          <p>Host = <span className="font-mono bg-slate-100 px-1 rounded">smtp-relay.brevo.com</span> · Port = <span className="font-mono bg-slate-100 px-1 rounded">587</span> · User = email Brevo · Pass = API Key Brevo.</p>
+          <p>Dapatkan API Key di: <a href="https://app.brevo.com/settings/keys/smtp" target="_blank" className="text-blue-600 underline">app.brevo.com → Settings → SMTP & API</a></p>
+        </div>
+      </div>
+
+      {/* Info variabel email otomatis */}
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2">
+        <div className="flex items-center gap-2 text-slate-600 font-semibold text-sm"><Info className="w-4 h-4 flex-shrink-0" /> Email Otomatis</div>
+        <p className="text-xs text-slate-500">Semua email otomatis (konfirmasi pendaftar, notifikasi admin, kelas bahasa) menggunakan nilai dari pengaturan ini:</p>
+        <div className="grid grid-cols-1 gap-1.5 text-xs">
+          {[
+            ["From Name", "nama pengirim yang muncul di inbox penerima, misal: TenHal Bekerja"],
+            ["From Email", "alamat pengirim yang terlihat penerima, misal: info@arlchoose.id"],
+          ].map(([key, desc]) => (
+            <div key={key} className="flex items-start gap-2">
+              <span className="font-mono bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-700 flex-shrink-0">{key}</span>
+              <span className="text-slate-400 pt-0.5">→ {desc}</span>
+            </div>
+          ))}
         </div>
       </div>
 

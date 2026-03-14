@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import { getToken } from "@/lib/auth"
 import { adminDelete } from "@/lib/api"
 import Pagination from "@/components/ui/pagination"
@@ -24,6 +25,7 @@ interface ContactsResponse {
 }
 
 export default function ContactsPage() {
+  const router = useRouter()
   const [messages, setMessages] = useState<ContactMessage[]>([])
   const [meta, setMeta] = useState({ total: 0, total_pages: 1, page: 1 })
   const [loading, setLoading] = useState(true)
@@ -186,9 +188,15 @@ export default function ContactsPage() {
                 </div>
               </div>
               <div className="px-6 py-4 border-t border-slate-100 flex gap-3 flex-shrink-0">
-                <a href={`mailto:${detail.email}`} className="flex-1 py-2 text-sm font-medium bg-[#1a3c6e] hover:bg-[#15336b] text-white rounded-xl transition text-center flex items-center justify-center gap-2">
+                <button
+                  onClick={() => {
+                    const subject = encodeURIComponent(`Re: ${detail.subject}`)
+                    const to = encodeURIComponent(detail.email)
+                    router.push(`/admin/email/inbox?compose=1&to=${to}&subject=${subject}`)
+                  }}
+                  className="flex-1 py-2 text-sm font-medium bg-[#1a3c6e] hover:bg-[#15336b] text-white rounded-xl transition text-center flex items-center justify-center gap-2">
                   <Mail className="w-4 h-4" /> Balas Email
-                </a>
+                </button>
                 <button onClick={() => setDeleteId(detail.id)} className="py-2 px-4 text-sm font-medium text-red-500 border border-red-200 rounded-xl hover:bg-red-50 transition">
                   <Trash2 className="w-4 h-4" />
                 </button>
