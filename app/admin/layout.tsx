@@ -58,7 +58,7 @@ export default function AdminLayout({
           sidebarOpen={sidebarOpen}
           onToggle={() => setSidebarOpen(!sidebarOpen)}
         />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className={`flex-1 overflow-hidden ${pathname.startsWith("/admin/email/inbox") || pathname.startsWith("/admin/email/sent") || pathname.startsWith("/admin/email/failed") ? "flex flex-col" : "overflow-y-auto p-6"}`}>
           {children}
         </main>
       </div>
